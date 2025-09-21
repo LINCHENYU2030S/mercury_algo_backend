@@ -1,0 +1,17 @@
+# Build artifacts
+bin/
+/out/
+
+# Git metadata
+.git
+.gitignore
+
+# IDE files
+.vscode/
+.idea/
+
+# Local data
+*.env
+*.log
+
+docker-compose.yml
