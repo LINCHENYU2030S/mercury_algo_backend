@@ -10,5 +10,6 @@ type MercuryAlgoBackendServiceImpl struct{}
 
 // ListAllBots implements the MercuryAlgoBackendServiceImpl interface.
 func (s *MercuryAlgoBackendServiceImpl) ListBots(ctx context.Context, req *api.ListBotsRequest) (resp *api.ListBotsResponse, err error) {
-	resp, err := bots.
+	resp, _ = bots.ListBots(ctx, req)
+	return resp, nil
 }
