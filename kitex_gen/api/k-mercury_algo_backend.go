@@ -185,7 +185,6 @@ func (p *TradingBot) FastRead(buf []byte) (int, error) {
 	var l int
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetId bool = false
 	var issetName bool = false
 	var issetTradingPair bool = false
 	for {
@@ -198,21 +197,6 @@ func (p *TradingBot) FastRead(buf []byte) (int, error) {
 			break
 		}
 		switch fieldId {
-		case 1:
-			if fieldTypeId == thrift.I32 {
-				l, err = p.FastReadField1(buf[offset:])
-				offset += l
-				if err != nil {
-					goto ReadFieldError
-				}
-				issetId = true
-			} else {
-				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
-				offset += l
-				if err != nil {
-					goto SkipFieldError
-				}
-			}
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				l, err = p.FastReadField2(buf[offset:])
@@ -308,11 +292,6 @@ func (p *TradingBot) FastRead(buf []byte) (int, error) {
 		}
 	}
 
-	if !issetId {
-		fieldId = 1
-		goto RequiredFieldNotSetError
-	}
-
 	if !issetName {
 		fieldId = 2
 		goto RequiredFieldNotSetError
@@ -331,20 +310,6 @@ SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 RequiredFieldNotSetError:
 	return offset, thrift.NewProtocolException(thrift.INVALID_DATA, fmt.Sprintf("required field %s is not set", fieldIDToName_TradingBot[fieldId]))
-}
-
-func (p *TradingBot) FastReadField1(buf []byte) (int, error) {
-	offset := 0
-
-	var _field int32
-	if v, l, err := thrift.Binary.ReadI32(buf[offset:]); err != nil {
-		return offset, err
-	} else {
-		offset += l
-		_field = v
-	}
-	p.Id = _field
-	return offset, nil
 }
 
 func (p *TradingBot) FastReadField2(buf []byte) (int, error) {
@@ -438,7 +403,6 @@ func (p *TradingBot) FastWrite(buf []byte) int {
 func (p *TradingBot) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
-		offset += p.fastWriteField1(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
 		offset += p.fastWriteField5(buf[offset:], w)
 		offset += p.fastWriteField6(buf[offset:], w)
@@ -453,7 +417,6 @@ func (p *TradingBot) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 func (p *TradingBot) BLength() int {
 	l := 0
 	if p != nil {
-		l += p.field1Length()
 		l += p.field2Length()
 		l += p.field3Length()
 		l += p.field4Length()
@@ -463,13 +426,6 @@ func (p *TradingBot) BLength() int {
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
-}
-
-func (p *TradingBot) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
-	offset := 0
-	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I32, 1)
-	offset += thrift.Binary.WriteI32(buf[offset:], p.Id)
-	return offset
 }
 
 func (p *TradingBot) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
@@ -520,13 +476,6 @@ func (p *TradingBot) fastWriteField7(buf []byte, w thrift.NocopyWriter) int {
 		offset += thrift.Binary.WriteI32(buf[offset:], *p.UserCount)
 	}
 	return offset
-}
-
-func (p *TradingBot) field1Length() int {
-	l := 0
-	l += thrift.Binary.FieldBeginLength()
-	l += thrift.Binary.I32Length()
-	return l
 }
 
 func (p *TradingBot) field2Length() int {

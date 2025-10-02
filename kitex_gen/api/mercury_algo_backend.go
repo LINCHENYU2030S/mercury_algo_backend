@@ -46,7 +46,6 @@ var fieldIDToName_BaseResponse = map[int16]string{
 }
 
 type TradingBot struct {
-	Id                         int32    `thrift:"id,1,required" frugal:"1,required,i32" json:"id"`
 	Name                       string   `thrift:"name,2,required" frugal:"2,required,string" json:"name"`
 	TradingPair                string   `thrift:"trading_pair,3,required" frugal:"3,required,string" json:"trading_pair"`
 	ArithmeticAnnualizedReturn *float64 `thrift:"arithmetic_annualized_return,4,optional" frugal:"4,optional,double" json:"arithmetic_annualized_return,omitempty"`
@@ -60,10 +59,6 @@ func NewTradingBot() *TradingBot {
 }
 
 func (p *TradingBot) InitDefault() {
-}
-
-func (p *TradingBot) GetId() (v int32) {
-	return p.Id
 }
 
 func (p *TradingBot) GetName() (v string) {
@@ -109,9 +104,6 @@ func (p *TradingBot) GetUserCount() (v int32) {
 	}
 	return *p.UserCount
 }
-func (p *TradingBot) SetId(val int32) {
-	p.Id = val
-}
 func (p *TradingBot) SetName(val string) {
 	p.Name = val
 }
@@ -155,7 +147,6 @@ func (p *TradingBot) String() string {
 }
 
 var fieldIDToName_TradingBot = map[int16]string{
-	1: "id",
 	2: "name",
 	3: "trading_pair",
 	4: "arithmetic_annualized_return",

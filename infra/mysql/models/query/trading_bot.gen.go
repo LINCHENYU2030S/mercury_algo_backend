@@ -16,7 +16,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"mercury_algo_backend/models"
+	"mercury_algo_backend/infra/mysql/models"
 )
 
 func newTradingBot(db *gorm.DB, opts ...gen.DOOption) tradingBot {

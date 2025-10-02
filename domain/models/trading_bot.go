@@ -2,11 +2,12 @@ package models
 
 import (
 	gormModels "mercury_algo_backend/infra/mysql/models"
+	"mercury_algo_backend/kitex_gen/api"
+	func_utils "mercury_algo_backend/utils/functor"
 )
 
 // TradingBot represents the domain model for a trading bot
 type TradingBot struct {
-	ID                         int32
 	Name                       string
 	TradingPair                string
 	ArithmeticAnnualizedReturn *float32
@@ -18,7 +19,6 @@ type TradingBot struct {
 // ToGorm converts the domain model to a GORM model
 func (t *TradingBot) ConvertBotDOToDAL() *gormModels.TradingBot {
 	return &gormModels.TradingBot{
-		ID:                         t.ID,
 		Name:                       t.Name,
 		TradingPair:                t.TradingPair,
 		ArithmeticAnnualizedReturn: t.ArithmeticAnnualizedReturn,
@@ -31,13 +31,23 @@ func (t *TradingBot) ConvertBotDOToDAL() *gormModels.TradingBot {
 // FromGorm converts a GORM model to a domain model
 func ConvertBotDALToDO(gormTradingBot *gormModels.TradingBot) *TradingBot {
 	return &TradingBot{
-		ID:                         gormTradingBot.ID,
 		Name:                       gormTradingBot.Name,
 		TradingPair:                gormTradingBot.TradingPair,
 		ArithmeticAnnualizedReturn: gormTradingBot.ArithmeticAnnualizedReturn,
 		SharpeRatio:                gormTradingBot.SharpeRatio,
 		MaximumDrawdown:            gormTradingBot.MaximumDrawdown,
 		UserCount:                  gormTradingBot.UserCount,
+	}
+}
+
+func ConvertBotDOToApi(tradingBot *TradingBot) *api.TradingBot {
+	return &api.TradingBot{
+		Name:                       tradingBot.Name,
+		TradingPair:                tradingBot.TradingPair,
+		ArithmeticAnnualizedReturn: func_utils.Ptr(float64((*tradingBot.ArithmeticAnnualizedReturn))),
+		SharpeRatio:                func_utils.Ptr(float64(*tradingBot.SharpeRatio)),
+		MaximumDrawdown:            func_utils.Ptr(float64(*tradingBot.MaximumDrawdown)),
+		UserCount:                  tradingBot.UserCount,
 	}
 }
 

@@ -38,10 +38,10 @@ func main() {
 	// Configure the generator
 	g := gen.NewGenerator(gen.Config{
 		// Output directory for generated code
-		OutPath: "./models/query",
+		OutPath: "./infra/mysql/models/query",
 
 		// Output directory for generated model structs
-		ModelPkgPath: "./models",
+		ModelPkgPath: "./infra/mysql/models",
 
 		// Generate mode
 		Mode: gen.WithDefaultQuery | gen.WithQueryInterface | gen.WithoutContext,
