@@ -41,14 +41,21 @@ func ConvertBotDALToDO(gormTradingBot *gormModels.TradingBot) *TradingBot {
 }
 
 func ConvertBotDOToApi(tradingBot *TradingBot) *api.TradingBot {
-	return &api.TradingBot{
-		Name:                       tradingBot.Name,
-		TradingPair:                tradingBot.TradingPair,
-		ArithmeticAnnualizedReturn: func_utils.Ptr(float64((*tradingBot.ArithmeticAnnualizedReturn))),
-		SharpeRatio:                func_utils.Ptr(float64(*tradingBot.SharpeRatio)),
-		MaximumDrawdown:            func_utils.Ptr(float64(*tradingBot.MaximumDrawdown)),
-		UserCount:                  tradingBot.UserCount,
+	res := &api.TradingBot{
+		Name:        tradingBot.Name,
+		TradingPair: tradingBot.TradingPair,
+		UserCount:   tradingBot.UserCount,
 	}
+	if tradingBot.ArithmeticAnnualizedReturn != nil {
+		res.ArithmeticAnnualizedReturn = func_utils.Ptr(float64(*tradingBot.ArithmeticAnnualizedReturn))
+	}
+	if tradingBot.SharpeRatio != nil {
+		res.SharpeRatio = func_utils.Ptr(float64(*tradingBot.SharpeRatio))
+	}
+	if tradingBot.MaximumDrawdown != nil {
+		res.MaximumDrawdown = func_utils.Ptr(float64(*tradingBot.MaximumDrawdown))
+	}
+	return res
 }
 
 // NewTradingBot creates a new TradingBot domain model

@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: mercuryalgodb
+    ports: ["3306:3306"]
+  api:
+    build: .
+    depends_on: [db]
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: secret
+      DB_NAME: mercuryalgodb
+      KITEX_ADDR: ":9000"
+    ports: ["9000:9000"]

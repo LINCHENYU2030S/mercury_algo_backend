@@ -22,5 +22,6 @@ func ListBots(ctx context.Context, req *api.ListBotsRequest) ([]*domain_models.T
 		return nil, err
 	}
 	bots := func_utils.Map(botsDAL, domain_models.ConvertBotDALToDO)
+
 	return bots, nil
 }
