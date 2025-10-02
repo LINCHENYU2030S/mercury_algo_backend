@@ -77,10 +77,3 @@ func Close() error {
 	}
 	return sqlDB.Close()
 }
-
-// AutoMigrate migrates all models
-func AutoMigrate() error {
-	// Import your models and add them here
-	// Example: return DB.AutoMigrate(&models.User{}, &models.Product{})
-	return nil
-}

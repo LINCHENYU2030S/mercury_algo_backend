@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"mercury_algo_backend/infra/mysql"
+	rds "mercury_algo_backend/infra/mysql"
 )
 
 func main() {
