@@ -13,7 +13,7 @@ func Init() {
 	// Create a new Hertz server
 	addr := os.Getenv("HTTP_ADDR")
 	if addr == "" {
-		addr = ":8888"
+		addr = "0.0.0.0:8888"
 	}
 	h := server.Default(server.WithHostPorts(addr))
 

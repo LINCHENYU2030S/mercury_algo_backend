@@ -2,17 +2,17 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: qoibLHkLR662CHPXsMwP
       MYSQL_DATABASE: mercuryalgodb
     ports: ["3306:3306"]
   api:
     build: .
     depends_on: [db]
     environment:
-      DB_HOST: db
-      DB_USER: root
-      DB_PASSWORD: secret
-      DB_NAME: mercuryalgodb
+      DB_HOST: mercuryalgodb.cho4u00yi8z9.us-east-2.rds.amazonaws.com
+      DB_USER: SeekingAlphaMA
+      DB_PASSWORD: qoibLHkLR662CHPXsMwP
+      DB_NAME: mercuryalgo
       KITEX_ADDR: ":9000"
       HTTP_ADDR: ":8888"
     ports: ["9000:9000", "8888:8888"]

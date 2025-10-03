@@ -3,10 +3,12 @@ package http
 import (
 	"context"
 	"encoding/json"
-	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"mercury_algo_backend/application"
 	"mercury_algo_backend/kitex_gen/api"
+	"strconv"
+
+	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
 func ListBots(ctx context.Context, c *app.RequestContext) {
@@ -15,7 +17,12 @@ func ListBots(ctx context.Context, c *app.RequestContext) {
 	queryParams := make(map[string]interface{})
 	c.QueryArgs().VisitAll(func(key, value []byte) {
 		// Convert values appropriately
-		queryParams[string(key)] = string(value)
+		if string(key) == "trading_pair" {
+			queryParams[string(key)] = string(value)
+		} else {
+			temp, _ := strconv.Atoi(string(value))
+			queryParams[string(key)] = temp
+		}
 	})
 
 	// Convert map to JSON and then to struct
