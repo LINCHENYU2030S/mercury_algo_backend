@@ -5,6 +5,7 @@ import (
 	rds "mercury_algo_backend/infra/mysql"
 	rds_query "mercury_algo_backend/infra/mysql/models/query"
 	api "mercury_algo_backend/kitex_gen/api/mercuryalgobackendservice"
+	"mercury_algo_backend/server/http"
 	"os"
 
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
@@ -37,5 +38,7 @@ func main() {
 	if err != nil {
 		log.Println(err.Error())
 	}
+
+	http.Init()
 
 }
