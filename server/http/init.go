@@ -2,6 +2,7 @@ package http
 
 import (
 	"log"
+	"os"
 
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/hertz-contrib/cors"
@@ -10,7 +11,11 @@ import (
 // StartHTTPServer initializes and starts the HTTP server with automatic route mapping
 func Init() {
 	// Create a new Hertz server
-	h := server.Default(server.WithHostPorts(":8888"))
+	addr := os.Getenv("HTTP_ADDR")
+	if addr == "" {
+		addr = ":8888"
+	}
+	h := server.Default(server.WithHostPorts(addr))
 
 	// Add CORS middleware
 	h.Use(cors.New(cors.Config{

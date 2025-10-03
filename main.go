@@ -26,7 +26,12 @@ func main() {
 	}()
 	rds_query.SetDefault(db)
 
+	go http.Init()
+
 	addr := os.Getenv("KITEX_ADDR")
+	if addr == "" {
+		addr = ":9000"
+	}
 	svr := api.NewServer(
 		new(MercuryAlgoBackendServiceImpl),
 		server.WithServiceAddr(utils.NewNetAddr("tcp", addr)),
@@ -38,7 +43,4 @@ func main() {
 	if err != nil {
 		log.Println(err.Error())
 	}
-
-	http.Init()
-
 }

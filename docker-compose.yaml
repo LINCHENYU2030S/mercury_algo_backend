@@ -14,4 +14,5 @@ services:
       DB_PASSWORD: secret
       DB_NAME: mercuryalgodb
       KITEX_ADDR: ":9000"
-    ports: ["9000:9000"]
+      HTTP_ADDR: ":8888"
+    ports: ["9000:9000", "8888:8888"]
