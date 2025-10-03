@@ -10,7 +10,6 @@ import (
 )
 
 func ListBots(ctx context.Context, req *api.ListBotsRequest) ([]*domain_models.TradingBot, error) {
-	//TODO
 	var botsDAL []*rds_models.TradingBot
 	var err error
 	if req.TradingPair != nil {
@@ -21,6 +20,7 @@ func ListBots(ctx context.Context, req *api.ListBotsRequest) ([]*domain_models.T
 	if err != nil {
 		return nil, err
 	}
+	botsDAL = func_utils.PaginateSlice(botsDAL, int(*(req.PageNum)), int(*(req.PageSize)))
 	bots := func_utils.Map(botsDAL, domain_models.ConvertBotDALToDO)
 
 	return bots, nil
